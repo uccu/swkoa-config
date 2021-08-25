@@ -1,0 +1,25 @@
+{
+    "name": "uccu/swkoa-config",
+    "description": "config tool for swkoa",
+    "keywords": [
+        "swkoa",
+        "swoole",
+        "koa",
+        "config",
+        "pzcat"
+    ],
+    "homepage": "https://github.com/uccu/swkoa-config",
+    "license": "MIT",
+    "authors": [{
+        "name": "pzcat",
+        "email": "cat@4moe.com"
+    }],
+    "require": {
+        "php": ">=7.3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Uccu\\SwKoaConfig\\": "lib"
+        }
+    }
+}
