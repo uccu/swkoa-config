@@ -7,11 +7,14 @@ use stdClass;
 class Config
 {
 
+    private static $confMap = [];
+
     private $conf;
 
-    public function __construct()
+    public function __construct($name)
     {
         $this->conf = new stdClass;
+        self::$confMap[$name] = $this;
     }
 
     public function importEnv(?string $path = null)
@@ -99,7 +102,7 @@ class Config
         return $value;
     }
 
-    public function get(string $key)
+    public function getConfig(string $key)
     {
 
         $keys = explode('.', $key);
@@ -113,5 +116,20 @@ class Config
         }
 
         return $conf;
+    }
+
+    public static function get(string $key)
+    {
+
+        $keys = explode('.', $key);
+        $name = array_shift($keys);
+        if (empty(self::$confMap[$name])) {
+            $self = new static($name);
+            $method = 'get' . ucfirst($name);
+            if (method_exists($self, $method)) {
+                $self->$method();
+            }
+        }
+        return self::$confMap[$name]->getConfig(implode(',', $keys));
     }
 }
