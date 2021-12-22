@@ -3,8 +3,9 @@
 namespace Uccu\SwKoaConfig;
 
 use stdClass;
+use Uccu\SwKoaPlugin\TPoolStartBeforePlugin;
 
-class Config
+class Config implements TPoolStartBeforePlugin
 {
 
     private static $confMap = [];
@@ -130,6 +131,17 @@ class Config
                 $self->$method();
             }
         }
-        return self::$confMap[$name]->getConfig(implode(',', $keys));
+        return self::$confMap[$name]->getConfig(implode('.', $keys));
+    }
+
+    /**
+     * @param \Uccu\SwKoaServer\PoolManager $manager
+     */
+    public static function poolStartBefore($manager)
+    {
+        $appName = "Uccu\\SwKoaServer\\App";
+        if (class_exists($appName)) {
+            $appName::$config = static::class;
+        }
     }
 }

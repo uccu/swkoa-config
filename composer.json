@@ -15,7 +15,8 @@
         "email": "cat@4moe.com"
     }],
     "require": {
-        "php": ">=7.3.0"
+        "php": ">=7.3.0",
+        "uccu/swkoa-plugin": "^0.1"
     },
     "autoload": {
         "psr-4": {
